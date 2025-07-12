@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Get Started</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to match the application's aesthetic */
+        body {
+            background-color: #f0f4f8; /* Light gray background, similar to some app themes */
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0;
+            padding: 1rem; /* Add some padding for smaller screens */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .get-started-container {
+            background-color: #ffffff; /* White card background */
+            padding: 2.5rem; /* Generous padding inside the card */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Soft shadow */
+            text-align: center;
+            max-width: 450px; /* Max width for the card */
+            width: 100%; /* Full width up to max-width */
+            animation: fadeIn 1s ease-out; /* Simple fade-in animation */
+        }
+        .app-logo {
+            width: 120px; /* Slightly larger logo */
+            height: 120px;
+            object-fit: cover; /* Ensures image covers the area without distortion */
+            border-radius: 50%; /* Circular logo */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the logo */
+        }
+        h1 {
+            color: #1a202c; /* Dark text for heading */
+            margin-bottom: 1rem; /* Space below heading */
+            font-size: 2.25rem; /* Large heading text */
+            line-height: 1.2;
+        }
+        p {
+            color: #4a5568; /* Gray text for paragraph */
+            margin-bottom: 2.5rem; /* More space below paragraph */
+            line-height: 1.6;
+            font-size: 1.125rem; /* Slightly larger body text */
+        }
+        .btn-get-started {
+            background-color: #6366f1; /* Indigo-500, often used as primary color */
+            color: white;
+            padding: 0.9rem 2.25rem; /* Larger padding for a more prominent button */
+            border-radius: 0.6rem; /* Slightly more rounded button */
+            font-weight: 700; /* Bolder text */
+            font-size: 1.1rem; /* Larger font size */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+            text-decoration: none; /* Remove underline from link */
+            display: inline-block; /* Allows padding and transitions for <a> */
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); /* Soft shadow for the button */
+        }
+        .btn-get-started:hover {
+            background-color: #4f46e5; /* Darker indigo on hover */
+            transform: translateY(-2px); /* Slight lift effect on hover */
+        }
+        .btn-get-started:active {
+            transform: translateY(0); /* Press effect */
+        }
+
+        /* Keyframe for fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="get-started-container">
+        <img src="https://via.placeholder.com/120/6366f1/ffffff?text=APP+LOGO" alt="App Logo" class="app-logo mx-auto mb-8">
+
+        <h1 class="font-extrabold">Welcome to Your Student Portal!</h1>
+        <p class="text-lg text-gray-700">
+            Track your academic progress, enhance your skills, manage projects, and connect with your peers.
+            Your journey to success begins here.
+        </p>
+        <a href="login.html" class="btn-get-started">
+            Get Started
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* Base styles */
+:root {
+    --bg-primary: #f1f5f9; --bg-secondary: #ffffff; --text-primary: #1e293b; --text-secondary: #64748b; --border-color: #e2e8f0; --accent-color: #4f46e5; --accent-hover: #4338ca; --accent-text: #ffffff;
+    --bg-pattern: url('https://www.transparenttextures.com/patterns/subtle-prism.png');
+}
+.theme-dark {
+    --bg-primary: #0f172a; --bg-secondary: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --border-color: #334155;
+    --bg-pattern: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+}
+.theme-ocean {
+    --bg-primary: #eff6ff; --bg-secondary: #ffffff; --text-primary: #1e3a8a; --text-secondary: #3b82f6; --border-color: #dbeafe; --accent-color: #2563eb; --accent-hover: #1d4ed8;
+    --bg-pattern: url('https://www.transparenttextures.com/patterns/lined-paper.png');
+}
+.theme-nebula {
+    --bg-primary: #111827; --bg-secondary: #1f2937; --text-primary: #f9fafb; --text-secondary: #d1d5db; --border-color: #374151; --accent-color: #8b5cf6; --accent-hover: #7c3aed;
+    --bg-pattern: url('https://www.transparenttextures.com/patterns/stardust.png');
+}
+
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.3s, color 0.3s; }
+.font-inter { font-family: 'Inter', sans-serif; } .font-roboto-mono { font-family: 'Roboto Mono', monospace; } .font-lora { font-family: 'Lora', serif; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.modal { display: none; } .modal.active { display: flex; }
+.nav-link { transition: all 0.2s ease-in-out; }
+.nav-link.active, .nav-link:hover { background-color: var(--accent-color); color: var(--accent-text); }
+.nav-link.active { transform: translateX(4px); }
+
+.form-input { @apply w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm; background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary); --tw-ring-color: var(--accent-color); }
+.btn-primary { @apply w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium; background-color: var(--accent-color); color: var(--accent-text); }
+.btn-primary:hover { background-color: var(--accent-hover); }
+.card { background-color: var(--bg-secondary); @apply rounded-xl shadow-lg overflow-hidden; }
+
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media print { body * { visibility: hidden; } #resume-output, #resume-output * { visibility: visible; } #resume-output { position: absolute; left: 0; top: 0; width: 100%; } }
+/* STYLES FOR FLOATING CHAT WIDGET */
+
+#chat-toggle-btn {
+    /* Positions the round chat button */
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+}
+
+.chat-widget {
+    /* Positions the main chat window */
+    position: fixed;
+    bottom: 6rem;
+    right: 2rem;
+    width: 380px;
+    height: 500px;
+    z-index: 1000;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    
+    /* This hides the widget by default */
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.chat-widget.active {
+    /* This makes the widget visible when it's active */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

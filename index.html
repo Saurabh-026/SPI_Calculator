@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Student Performance Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link id="font-link" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="font-inter">
+
+    <div id="main-app" class="app-view">
+        <div class="flex h-screen">
+            <aside id="sidebar" class="w-64 flex-shrink-0 transform -translate-x-full transition-transform duration-300 ease-in-out fixed h-full z-40 md:relative md:translate-x-0" style="background-color: var(--bg-secondary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);">
+                <div class="flex items-center justify-center h-20" style="border-bottom: 1px solid var(--border-color);"><i data-lucide="graduation-cap" class="h-10 w-10" style="color: var(--accent-color);"></i><span class="ml-2 text-xl font-bold">Acadex</span></div>
+                <nav id="main-nav" class="mt-4 space-y-1 px-2">
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="dashboard"><i data-lucide="layout-dashboard" class="mr-3"></i>Dashboard</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="profile"><i data-lucide="user-cog" class="mr-3"></i>My Profile</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="academics"><i data-lucide="book-open" class="mr-3"></i>Academics</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="skills"><i data-lucide="code" class="mr-3"></i>Skills</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="projects"><i data-lucide="file-text" class="mr-3"></i>Projects</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="extracurricular"><i data-lucide="award" class="mr-3"></i>Extra-curricular</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="leaderboard"><i data-lucide="bar-chart-3" class="mr-3"></i>Leaderboard</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="resume"><i data-lucide="printer" class="mr-3"></i>Resume</a>
+                    <a href="about.html" class="nav-link flex items-center py-2.5 px-4 rounded-lg"><i data-lucide="info" class="mr-3"></i>About Us</a>
+                    <a href="#" class="nav-link flex items-center py-2.5 px-4 rounded-lg" data-view="appearance"><i data-lucide="palette" class="mr-3"></i>Appearance</a>
+                </nav>
+            </aside>
+
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <header class="z-10" style="background-color: var(--bg-secondary); box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);">
+                    <div class="flex items-center justify-between h-20 px-8">
+                        <button id="sidebar-toggle" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                            <i data-lucide="menu" class="h-6 w-6"></i>
+                        </button>
+                        <div class="flex-1 flex justify-center md:justify-start">
+                             <h1 id="page-title" class="text-2xl font-bold"></h1>
+                        </div>
+                       
+                        <div class="flex items-center space-x-4">
+                            <div id="user-profile-menu" class="relative">
+                                <button id="user-menu-button" class="flex items-center space-x-2">
+                                    <img id="header-user-photo" src="" class="w-10 h-10 rounded-full" style="border: 2px solid var(--accent-color);">
+                                    <span id="header-user-name" class="font-semibold hidden md:block"></span>
+                                    <i data-lucide="chevron-down" class="h-5 w-5"></i>
+                                </button>
+                                <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-xl z-20" style="background-color: var(--bg-secondary);">
+                                    <a href="#" id="logout-button" class="block px-4 py-2 text-sm">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto p-8 no-scrollbar" style="background-color: var(--bg-primary);"></main>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-data-modal" class="modal fixed inset-0 bg-black bg-opacity-60 items-center justify-center z-50">
+        <div id="modal-content" class="rounded-lg p-8 w-full max-w-lg m-4" style="background-color: var(--bg-secondary);"></div>
+    </div>
+    
+    <script src="assets/js/main.js"></script>
+    <div id="chat-widget-container" class="chat-widget">
+        <div class="card h-full flex flex-col">
+            <div class="p-4 border-b border-slate-200 flex justify-between items-center ">
+                <h3 class="font-bold ">Acadex Help!!</h3>
+                <button id="close-chat-btn" class="p-1 rounded-full hover:bg-slate-200">
+                    <i data-lucide="x" class="h-5 w-5"></i>
+                </button>
+            </div>
+            <div id="chat-messages" class="flex-1 p-6 overflow-y-auto flex flex-col gap-4 bg-indigo-200">
+                <div class="p-3 rounded-lg bg-slate-200 text-slate-600 self-start">
+                    Hello! How can I help you today?
+                </div>
+            </div>
+            <div class="p-4 border-t border-slate-200 flex gap-4 ">
+                <input id="chat-input" type="text" placeholder="Type your message..." class="form-input flex-1 rounded-2xl px-3 ">
+                <button id="send-button" class="btn-primary w-auto px-6 rounded-full ">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="chat-toggle-btn" class="bg-indigo-600 text-white rounded-full p-4 shadow-lg hover:bg-indigo-700 transition">
+        <i data-lucide="message-circle" class="h-8 w-8"></i>
+    </button>
+</body>
+</html>

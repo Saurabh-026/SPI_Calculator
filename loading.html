@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Student Performance Index</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+            color: #2d3748;
+        }
+        
+        /* Blue & White Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #93c5fd;
+            opacity: 0;
+            animation: confettiFall 5s linear infinite;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .preloader-content {
+            text-align: center;
+            color: #1e40af;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .classroom-animation {
+            width: 350px;
+            height: 250px;
+            margin: 0 auto 30px;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+        
+        .blackboard {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 120px;
+            background-color: #1a2e35;
+            border-radius: 10px;
+            border: 8px solid #5d4037;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chalk-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            opacity: 0;
+            animation: chalkWrite 1.5s 0.5s forwards;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        @keyframes chalkWrite {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .desk {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 15px;
+            background-color: #5d4037;
+            border-radius: 5px;
+        }
+        
+        .desk-leg-left, .desk-leg-right {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            height: 40px;
+            background-color: #3e2723;
+        }
+        
+        .desk-leg-left { left: 30px; }
+        .desk-leg-right { right: 30px; }
+        
+        .student {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 60px;
+            background-color: #60a5fa;
+            border-radius: 20px 20px 0 0;
+            animation: studentBounce 1s infinite alternate;
+        }
+        
+        .student-head {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: #fef08a;
+            border-radius: 50%;
+        }
+        
+        .student-eye {
+            position: absolute;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background-color: #000;
+            border-radius: 50%;
+        }
+        
+        .eye-left { left: 6px; }
+        .eye-right { right: 6px; }
+        
+        .book-stack {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 10px;
+            background-color: #3b82f6;
+            border-radius: 3px;
+            animation: bookGrow 2s forwards;
+        }
+        
+        .book-top {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 5px;
+            background-color: #2563eb;
+            border-radius: 3px;
+            animation: bookAppear 1s 1s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes studentBounce {
+            0% { transform: translateX(-50%) translateY(0); }
+            100% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        @keyframes bookGrow {
+            0% { width: 0; }
+            100% { width: 60px; }
+        }
+        
+        @keyframes bookAppear {
+            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        .progress-container {
+            width: 250px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            margin: 20px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-image: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 10px;
+            animation: progressLoad 3s ease-in-out forwards;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes progressLoad {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        
+        .preloader-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: titlePulse 2s infinite alternate;
+            padding: 0 20px;
+        }
+        
+        @keyframes titlePulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        
+        /* Main Content Styles */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+        
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 100px;
+            right: -50px;
+            animation-delay: 2s;
+            background: rgba(76, 201, 240, 0.1);
+        }
+        
+        .circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            right: 20%;
+            animation-delay: 4s;
+            background: rgba(63, 55, 201, 0.1);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        .get-started-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .main-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .get-started-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .app-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 5px 15px rgba(67, 97, 238, 0.3));
+            transition: transform 0.5s ease;
+        }
+        
+        .get-started-container:hover .app-logo {
+            transform: rotate(10deg) scale(1.05);
+        }
+        
+        h1 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        p {
+            color: #2d3748;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-size: 1.15rem;
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+        
+        .btn-get-started {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            outline: none;
+        }
+        
+        .btn-get-started:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-get-started:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-get-started::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-get-started:hover::before {
+            left: 100%;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: var(--accent);
+            border-radius: 50%;
+            animation: float-up 5s infinite ease-in;
+            opacity: 0.6;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            width: 120px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-text {
+            font-size: 0.85rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .popup-content {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .popup-close {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-close:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Text highlight animation */
+        .highlight {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: rgba(76, 201, 240, 0.3);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .highlight:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body >
+    <!-- Blue & White Preloader Animation -->
+    <div class="preloader" id="preloader">
+        <!-- Confetti elements will be added by JavaScript -->
+        <div class="preloader-content">
+            <h1 class="preloader-title">Student Performance Index</h1>
+            
+            <div class="classroom-animation">
+                <div class="blackboard">
+                    <div class="chalk-text">WELCOME 🎀</div>
+                </div>
+                <div class="desk">
+                    <div class="desk-leg-left"></div>
+                    <div class="desk-leg-right"></div>
+                </div>
+                <div class="student">
+                    <div class="student-head">
+                        <div class="student-eye eye-left"></div>
+                        <div class="student-eye eye-right"></div>
+                    </div>
+                </div>
+                <div class="book-stack"></div>
+                <div class="book-top"></div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+                <div class="progress-text"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content (hidden initially) -->
+     
+    <div class="main-content" id="mainContent" >
+        <div class="bg-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+   <div class="w-screen h-screen flex flex-col justify-center items-center relative overflow-hidden">
+  <div class="particles absolute inset-0 z-0" id="particles"></div>
+
+  <div class="get-started-container z-10 text-center animate__animated animate__fadeIn animate__slower">
+    <img src="https://cdn-icons-png.flaticon.com/512/3976/3976626.png" alt="Student Performance Index Logo" class="app-logo mx-auto mb-6">
+
+    <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-500 animate__animated animate__fadeInUp">
+      Student Performance Index
+    </h1>
+
+    <p class="mt-4 text-gray-700 max-w-xl mx-auto animate__animated animate__fadeInUp animate__delay-1s">
+      Track your <span class="highlight">academic progress</span>, enhance your skills, manage projects, and connect with your peers.
+      Your journey to success begins here.
+    </p>
+
+    <div class="flex justify-center gap-6 mt-6 animate__animated animate__fadeInUp animate__delay-2s">
+      <div class="feature" onclick="showPopup('analytics')">
+        <div class="feature-icon text-xl">📊</div>
+        <div class="feature-text text-sm font-medium">Analytics</div>
+      </div>
+      <div class="feature" onclick="showPopup('courses')">
+        <div class="feature-icon text-xl">📚</div>
+        <div class="feature-text text-sm font-medium">Courses</div>
+      </div>
+      <div class="feature" onclick="showPopup('goals')">
+        <div class="feature-icon text-xl">🎯</div>
+        <div class="feature-text text-sm font-medium">Goals</div>
+      </div>
+    </div>
+
+    <a href="login.html" class="inline-block mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full shadow-md text-lg font-semibold animate__animated animate__fadeInUp animate__delay-3s">
+      Get Started
+    </a>
+  </div>
+</div>
+
+          
+    <!-- Popup Elements -->
+    <div class="popup-overlay" id="popupOverlay"></div>
+    
+    <div class="popup" id="analyticsPopup">
+        <h3 class="popup-title">📊 Performance Analytics</h3>
+        <div class="popup-content">
+            Our advanced analytics dashboard helps you ur academic progress with visual charts and detailed insights. Identify your strengths and areas for improvement!
+        </div>
+        <button class="popup-close" onclick="hidePopup()">Got it!</button>
+    </div>
+    
+    <div class="popup" id="coursesPopup">
+        <h3 class="popup-title">📚 Course Management</h3>
+        <div class="popup-content">
+            Organize all your courses in one place. Track assignments, deadlines, and resources. Never miss an important date again with our reminder system!
+        </div>
+        <button class="popup-close" onclick="hidePopup()">Sounds great!</button>
+    </div>
+    
+    <div class="popup" id="goalsPopup">
+        <h3 class="popup-title">🎯 Goal Setting</h3>
+        <div class="popup-content">
+            Set, track, and achieve your academic goals. Our system helps you break down big objectives into manageable steps and celebrates your progress!
+        </div>
+        <button class="popup-close" onclick="hidePopup()">Let's go!</button>
+    </div>
+
+    <script>
+        // Create confetti for preloader
+        function createConfetti() {
+            const preloader = document.getElementById('preloader');
+            const colors = ['#93c5fd', '#bfdbfe', '#3b82f6', '#60a5fa', '#1d4ed8', '#2563eb'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random properties
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 10 + 5}px`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = `${Math.random() * 5}s`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                
+                preloader.appendChild(confetti);
+            }
+        }
+        
+        // Popup functions
+        function showPopup(type) {
+            const overlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById(`${type}Popup`);
+            
+            overlay.classList.add('active');
+            popup.classList.add('active');
+        }
+        
+        function hidePopup() {
+            const overlay = document.getElementById('popupOverlay');
+            const popups = document.querySelectorAll('.popup');
+            
+            overlay.classList.remove('active');
+            popups.forEach(popup => {
+                popup.classList.remove('active');
+            });
+        }
+        
+        // Close popup when clicking outside
+        document.getElementById('popupOverlay').addEventListener('click', hidePopup);
+        
+        // Wait for page to load
+        window.addEventListener('load', function() {
+            // Create confetti
+            createConfetti();
+            
+            // Create floating particles for main content
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 3px and 8px
+                const size = Math.random() * 5 + 3;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-${size}px`;
+                
+                // Random animation duration between 5s and 15s
+                particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Add hover effect to the container
+            const container = document.querySelector('.get-started-container');
+            container.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                container.style.transform = `perspective(1000px) rotateX(${(y - 0.5) * 5}deg) rotateY(${(x - 0.5) * -5}deg)`;
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                container.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+            
+            // Hide preloader and show main content after animation completes
+            setTimeout(function() {
+                const preloader = document.getElementById('preloader');
+                const mainContent = document.getElementById('mainContent');
+                
+                // Animate the student jumping for joy before transition
+                const student = document.querySelector('.student');
+                student.style.animation = 'studentJump 0.5s ease-out 2';
+                
+                // Fade out preloader
+                preloader.style.opacity = '0';
+                
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    mainContent.classList.add('show');
+                    
+                    // Show welcome popup after a delay
+                    setTimeout(() => {
+                        showPopup('analytics');
+                    }, 1000);
+                }, 500); // Match this with the transition duration
+            }, 3500); // Match this with the animation duration
+        });
+        
+        // Add highlight animation to text elements on hover
+        document.querySelectorAll('.highlight').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.transition = 'all 0.3s ease';
+            });
+        });
+    </script>
+</body>
+</html>
